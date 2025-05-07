@@ -8,3 +8,13 @@
 | Composer      | 2.x              | 
 | Node.js       | 16.x o superior  | 
 | npm           | 8.x o superior   | 
+
+- Crear BD
+- Cambiar datos en env
+- Cambiar los roles de migración
+- Cambiar logo
+    login.blade.php
+    sidebar.blade.php
+- Cambiar color base
+    #6777ef
+    style.css  
