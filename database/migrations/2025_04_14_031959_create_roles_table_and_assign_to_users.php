@@ -18,8 +18,6 @@ return new class extends Migration {
         // Insertar roles por default
         DB::table('roles')->insert([
             ['nombre' => 'Administrador', 'created_at' => now(), 'updated_at' => now()],
-            ['nombre' => 'Estandar',     'created_at' => now(), 'updated_at' => now()],
-            ['nombre' => 'Almacén',       'created_at' => now(), 'updated_at' => now()],
         ]);
 
         // Agregar campo role_id a la tabla users
