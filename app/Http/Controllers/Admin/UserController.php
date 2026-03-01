@@ -81,7 +81,7 @@ class UserController extends Controller
             'role_id' => 'required|exists:roles,id',
         ]);
 
-        $data = $request->only(['name', 'email', 'role_id']);
+        $data = $request->only(['name', 'email', 'role_id', 'inhabilitado']);
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
@@ -97,8 +97,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id); 
-        $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'Usuario eliminado.');
+        $user = User::findOrFail($id);
+        $user->inhabilitado = true;
+        $user->save();
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Usuario inhabilitado correctamente');
     }
 }

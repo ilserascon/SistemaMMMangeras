@@ -5,7 +5,7 @@
 @section('content')
 <div class="section">
   <div class="section-header">
-    <h1>Usuarios</h1>
+    <h2>Usuarios</h2>
     <div class="section-header-button ml-auto">
       <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Nuevo Usuario</a>
     </div>
@@ -17,9 +17,6 @@
     @endif
 
     <div class="card">
-      <div class="card-header">
-        <h4>Lista de Usuarios</h4>
-      </div>
       <div class="card-body table-responsive">
         <table class="table table-striped table-bordered">
           <thead>
@@ -28,6 +25,7 @@
               <th>Email</th>
               <th>Creado</th>
               <th>Rol</th>
+              <th>Estatus</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -39,15 +37,19 @@
                 <td>{{ $user->created_at->format('d/m/Y') }}</td>
                 <td>{{ $user->role->nombre ?? '-' }}</td>
                 <td>
+                    @if(!$user->inhabilitado)
+                        <span class="badge badge-success">Activo</span>
+                    @else
+                        <span class="badge badge-danger">Inhabilitado</span>
+                    @endif
+                </td>
+                <td>
                   <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                  <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
-                    @csrf @method('DELETE')
-                    <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar usuario?')"><i class="fas fa-trash"></i></button>
-                  </form>
+
                 </td>
               </tr>
             @empty
-              <tr><td colspan="4" class="text-center">No hay usuarios registrados.</td></tr>
+              <tr><td colspan="6" class="text-center">No hay usuarios registrados.</td></tr>
             @endforelse
           </tbody>
         </table>

@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\BodegaController;
+use App\Http\Controllers\ProductoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,3 +32,6 @@ Auth::routes();
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
 });
+
+Route::resource('bodegas', BodegaController::class);
+Route::resource('productos', ProductoController::class);

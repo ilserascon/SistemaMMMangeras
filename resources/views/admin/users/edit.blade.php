@@ -49,6 +49,14 @@
                 @error('role_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
+            <div class="form-group">
+                <label for="inhabilitado">Estatus</label>
+                <select name="inhabilitado" class="form-control @error('inhabilitado') is-invalid @enderror" required>
+                    <option value="0" {{ !$user->inhabilitado ? 'selected' : '' }}>Activo</option>
+                    <option value="1" {{ $user->inhabilitado ? 'selected' : '' }}>Inhabilitado</option>
+                </select>
+                @error('inhabilitado') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
 
           <button type="submit" class="btn btn-primary">Actualizar</button>
           <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancelar</a>

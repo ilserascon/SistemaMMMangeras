@@ -13,6 +13,12 @@
         <li class="{{ request()->is('admin/users*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fas fa-users"></i> <span>Usuarios</span></a>
         </li>
+        <li class="{{ request()->is('bodegas*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('bodegas.index') }}"><i class="fas fa-warehouse"></i> <span>Bodegas</span></a>
+        </li>
+        <li class="{{ request()->is('productos*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('productos.index') }}"><i class="fas fa-boxes"></i> <span>Productos</span></a>
+        </li>
       @endif
     </ul>
   </aside>
