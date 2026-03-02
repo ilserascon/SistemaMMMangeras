@@ -10,6 +10,9 @@
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
+    @error('productos')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
 
     <div class="card">
         <div class="card-body">
@@ -22,7 +25,7 @@
                     </div>
                     <div class="col-md-6">
                         <label>Fecha</label>
-                        <input type="date" name="fecha" class="form-control" required>
+                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}" required>
                     </div>
                 </div>
                 <div class="row">

@@ -26,7 +26,15 @@ class FacturaController extends Controller
 
     public function storeManual(Request $request)
     {
+        $request->validate([
+            'productos' => 'required|array|min:1'
+        ], [
+            'productos.required' => 'Debe registrar al menos un producto.',
+            'productos.min' => 'Debe registrar al menos un producto.'
+        ]);
+
         DB::transaction(function () use ($request) {
+
             $factura = Factura::create([
                 'folio' => $request->folio,
                 'proveedor' => $request->proveedor,
