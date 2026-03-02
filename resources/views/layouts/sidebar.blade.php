@@ -22,6 +22,9 @@
         <li class="{{ request()->is('facturas*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('facturas.index') }}"><i class="fas fa-file-invoice"></i> <span>Facturas</span></a>
         </li>
+        <li class="{{ request()->is('inventarios*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('inventarios.index') }}"><i class="fas fa-clipboard-list"></i> <span>Inventario</span></a>
+        </li>
       @endif
     </ul>
   </aside>
