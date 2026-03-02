@@ -12,9 +12,27 @@ use Illuminate\Support\Facades\DB;
 
 class FacturaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $facturas = Factura::with('user')->latest()->paginate(10);
+        $query = Factura::with('user'); 
+
+        if ($request->filled('folio')) {
+            $query->where('folio', 'like', '%' . $request->folio . '%');
+        }
+
+        if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
+            $query->whereBetween('fecha', [
+                $request->fecha_inicio,
+                $request->fecha_fin
+            ]);
+        } elseif ($request->filled('fecha_inicio')) {
+            $query->whereDate('fecha', '>=', $request->fecha_inicio);
+        } elseif ($request->filled('fecha_fin')) {
+            $query->whereDate('fecha', '<=', $request->fecha_fin);
+        }
+
+        $facturas = $query->orderBy('fecha', 'desc')->paginate(10);
+
         return view('facturas.index', compact('facturas'));
     }
 
