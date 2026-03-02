@@ -16,7 +16,7 @@ class Factura extends Model
     // Relación con detalles
     public function detalles()
     {
-        return $this->hasMany(FacturaDetalle::class);
+        return $this->hasMany(FacturaDetalle::class, 'factura_id');
     }
 
     // Relación con bodega

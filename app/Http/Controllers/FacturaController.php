@@ -36,6 +36,16 @@ class FacturaController extends Controller
         return view('facturas.index', compact('facturas'));
     }
 
+    public function show($id)
+    {
+        $factura = Factura::with([
+            'user',
+            'detalles.producto'
+        ])->findOrFail($id);
+
+        return view('facturas.show', compact('factura'));
+    }
+
     public function createManual()
     {
         $productos = Producto::all();
