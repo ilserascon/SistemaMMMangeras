@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BodegaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\FacturaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,11 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
 
 Route::resource('bodegas', BodegaController::class);
 Route::resource('productos', ProductoController::class);
+Route::resource('facturas', FacturaController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('facturas/manual/create', [FacturaController::class, 'createManual'])
+        ->name('facturas.createManual');
+    Route::post('facturas/manual/store', [FacturaController::class, 'storeManual'])
+        ->name('facturas.storeManual');
+});

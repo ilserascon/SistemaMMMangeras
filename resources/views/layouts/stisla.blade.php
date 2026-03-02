@@ -31,5 +31,6 @@
   <script src="{{ asset('stisla/assets/modules/moment.min.js') }}"></script>
   <script src="{{ asset('stisla/assets/js/scripts.js') }}"></script>
 
+  @yield('scripts')
 </body>
 </html>
