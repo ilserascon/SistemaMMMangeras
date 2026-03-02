@@ -37,6 +37,8 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
 Route::resource('bodegas', BodegaController::class);
 Route::resource('productos', ProductoController::class);
 Route::resource('facturas', FacturaController::class);
+Route::post('facturas/{factura}/cancelar', [FacturaController::class, 'cancelar'])
+    ->name('facturas.cancelar');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('facturas/manual/create', [FacturaController::class, 'createManual'])

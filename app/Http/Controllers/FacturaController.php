@@ -72,7 +72,7 @@ class FacturaController extends Controller
             
             $movimiento = Movimiento::create([
                 'tipo' => 'Entrada',
-                'bodega_destino_id' => $request->bodega_id,
+                'bodega_destino_id' => 1,
                 'user_id' => auth()->id(),
                 'factura_id' => $factura->id,
                 'fecha' => now()
@@ -104,7 +104,7 @@ class FacturaController extends Controller
                 // Actualizar inventario
                 $inventario = Inventario::firstOrCreate([
                     'producto_id' => $producto->id,
-                    'bodega_id' => $request->bodega_id
+                    'bodega_id' => 1
                 ]);
                 $inventario->increment('cantidad', $p['cantidad']);
             }
@@ -114,5 +114,49 @@ class FacturaController extends Controller
 
         return redirect()->route('facturas.createManual')
             ->with('success','Factura registrada correctamente');
+    }
+
+    public function cancelar(Factura $factura)
+    {
+        try {
+            if ($factura->cancelado === 1) {
+                return back()->with('error', 'La factura ya está cancelada.');
+            }
+
+            DB::transaction(function () use ($factura) {
+
+                foreach ($factura->detalles as $detalle) {
+
+                    $inventario = Inventario::where([
+                        'producto_id' => $detalle->producto_id,
+                        'bodega_id' => 1
+                    ])->lockForUpdate()->first();
+
+                    if (!$inventario) {
+                        throw new \Exception("No existe inventario para el producto ID {$detalle->producto_id}");
+                    }
+
+                    if ($inventario->cantidad < $detalle->cantidad) {
+                        throw new \Exception("Inventario insuficiente para cancelar.");
+                    }
+
+                    $inventario->cantidad -= $detalle->cantidad;
+                    $inventario->save();
+                }
+
+                $movimiento = Movimiento::where('factura_id', $factura->id)->first();
+                if ($movimiento) {
+                    $movimiento->update(['cancelado' => 1]);
+                }
+
+                $factura->update([
+                    'cancelado' => 1
+                ]);
+            });
+
+            return back()->with('success', 'Factura cancelada correctamente.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error al cancelar la factura: ' . $e->getMessage());
+        }
     }
 }

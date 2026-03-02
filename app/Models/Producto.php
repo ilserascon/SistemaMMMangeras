@@ -19,7 +19,7 @@ class Producto extends Model
 
     public function inventarios()
     {
-        return $this->hasMany(Inventario::class);
+        return $this->hasOne(Inventario::class);
     }
 
     public function movimientoDetalles()

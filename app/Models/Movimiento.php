@@ -35,7 +35,7 @@ class Movimiento extends Model
 
     public function factura()
     {
-        return $this->belongsTo(Factura::class);
+        return $this->belongsTo(Factura::class, 'factura_id');
     }
 
     public function venta()

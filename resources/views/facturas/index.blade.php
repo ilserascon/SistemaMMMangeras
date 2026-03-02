@@ -16,6 +16,9 @@
     @if (session('success'))
       <div class="alert alert-success">{{ session('success') }}</div>
     @endif
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
         <div class="card">
             <div class="card-body table-responsive">
@@ -74,7 +77,11 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('facturas.show', $factura) }}" class="btn btn-info btn-sm" title="Ver Factura"><i class="fas fa-file"></i> </a>
-                                    <a href="{{ route('facturas.edit', $factura) }}" class="btn btn-danger btn-sm" title="Cancelar Factura"><i class="fas fa-times"></i> </a>
+                                    @if($factura->cancelado == 0)
+                                        <button class="btn btn-danger btn-sm btn-cancelar" data-id="{{ $factura->id }}" data-folio="{{ $factura->folio }}" title="Cancelar Factura">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -87,5 +94,51 @@
 
     </div>
 
+    <form id="form-cancelar" method="POST" style="display:none;">
+        @csrf
+    </form>
+
 </div>
+@endsection
+
+@section('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.btn-cancelar').forEach(button => {
+
+        button.addEventListener('click', function () {
+
+            let facturaId = this.dataset.id;
+            let folio = this.dataset.folio;
+
+            Swal.fire({
+                title: '¿Cancelar factura?',
+                html: `
+                    <strong>Folio:</strong> ${folio} <br><br>
+                    Esta acción descontará los productos del inventario.
+                `,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, cancelar',
+                cancelButtonText: 'No',
+                reverseButtons: true
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    let form = document.getElementById('form-cancelar');
+                    form.action = `/facturas/${facturaId}/cancelar`;
+                    form.submit();
+                }
+            });
+
+        });
+
+    });
+
+});
+</script>
 @endsection

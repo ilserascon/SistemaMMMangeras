@@ -28,7 +28,7 @@ class Factura extends Model
     // Relación con movimiento
     public function movimiento()
     {
-        return $this->hasOne(Movimiento::class);
+        return $this->hasMany(Movimiento::class, 'factura_id');
     }
 
     // Relación con usuario    

@@ -29,17 +29,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label>Proveedor</label>
                         <input type="text" name="proveedor" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Bodega</label>
-                        <select name="bodega_id" class="form-control" required>
-                            @foreach(\App\Models\Bodega::all() as $b)
-                                <option value="{{ $b->id }}">{{ $b->nombre }}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
 
@@ -85,7 +77,7 @@ $(document).ready(function() {
             <td><input type="text" name="productos[${index}][descripcion]" class="form-control descripcionInput" required></td>
             <td><input type="text" name="productos[${index}][unidad]" class="form-control unidadInput" required></td>
             <td><input type="text" name="productos[${index}][cprodserv]" class="form-control cProdServInput" required></td>
-            <td><input type="number" name="productos[${index}][cantidad]" class="form-control cantidadInput" value="1" min="1" required></td>
+            <td><input type="number" name="productos[${index}][cantidad]" class="form-control cantidadInput" value="1" step="0.01" min="0.01" required></td>
             <td><button type="button" class="btn btn-danger removeRow">Eliminar</button></td>
         </tr>`;
         $('#productosTable tbody').append(row);
