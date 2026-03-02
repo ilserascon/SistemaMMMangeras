@@ -48,3 +48,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('facturas/manual/store', [FacturaController::class, 'storeManual'])
         ->name('facturas.storeManual');
 });
+Route::post('facturas/xml', 
+    [FacturaController::class, 'cargarXml']
+)->name('facturas.cargarXml');
