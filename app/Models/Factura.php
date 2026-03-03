@@ -10,7 +10,7 @@ class Factura extends Model
     use HasFactory;
 
     protected $fillable = [
-        'folio', 'proveedor', 'fecha', 'subtotal', 'iva', 'total', 'bodega_id', 'user_id', 'cancelado'
+        'folio', 'uuid', 'proveedor', 'fecha', 'subtotal', 'iva', 'total', 'bodega_id', 'user_id', 'cancelado'
     ];
 
     // Relación con detalles

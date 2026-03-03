@@ -60,7 +60,13 @@ class BodegaController extends Controller
     {
         $bodega = Bodega::findOrFail($id);
 
-        $bodega->update($request->validated());
+        $data = $request->validated();
+
+        if ($id == 1) {
+            unset($data['inhabilitado']);
+        }
+
+        $bodega->update($data);
 
         return redirect()->route('bodegas.index')->with('success', 'Bodega actualizada correctamente');
     }

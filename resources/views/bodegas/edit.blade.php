@@ -42,14 +42,16 @@
                    value="{{ old('encargado', $bodega->encargado) }}">
         </div>
 
+        @if ($bodega->id !== 1)
         <div class="mb-3">
-                <label for="inhabilitado">Estatus</label>
-                <select name="inhabilitado" class="form-control @error('inhabilitado') is-invalid @enderror" required>
-                    <option value="0" {{ !$bodega->inhabilitado ? 'selected' : '' }}>Activa</option>
-                    <option value="1" {{ $bodega->inhabilitado ? 'selected' : '' }}>Inhabilitada</option>
-                </select>
-                @error('inhabilitado') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            <label for="inhabilitado">Estatus</label>
+            <select name="inhabilitado" class="form-control @error('inhabilitado') is-invalid @enderror" required>
+                <option value="0" {{ !$bodega->inhabilitado ? 'selected' : '' }}>Activa</option>
+                <option value="1" {{ $bodega->inhabilitado ? 'selected' : '' }}>Inhabilitada</option>
+            </select>
+            @error('inhabilitado') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+        @endif
 
         <button class="btn btn-success">Actualizar</button>
         <a href="{{ route('bodegas.index') }}" class="btn btn-secondary">Cancelar</a>

@@ -7,8 +7,10 @@
     <div class="section-header">
         <h2>Facturas</h2>
         <div class="section-header-button ml-auto">
-            <a href="{{ route('facturas.createManual') }}" class="btn btn-primary">Cargar Factura Manual</a>
-            <a href="{{ route('facturas.createManual') }}" class="btn btn-info"><i class="fas fa-file-upload"></i> Cargar Factura XML</a>
+            <a href="{{ route('facturas.createManual') }}" class="btn btn-primary">Registrar Factura Manual</a>
+            <button class="btn btn-success" data-toggle="modal" data-target="#modalXml">
+                <i class="fas fa-file-upload"></i> Cargar XML
+            </button>
         </div>
     </div>
 
@@ -99,6 +101,75 @@
     </form>
 
 </div>
+
+<div class="modal fade" id="modalXml" tabindex="-1" style="z-index: 1050;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Cargar Factura XML</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+            </div>
+
+            <form id="form-xml" 
+                action="{{ route('facturas.cargarXml') }}" 
+                method="POST" 
+                enctype="multipart/form-data">
+
+                @csrf
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Seleccionar archivo XML</label>
+                        <input type="file" 
+                            name="xml" 
+                            class="form-control" 
+                            accept=".xml" 
+                            required>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" 
+                            class="btn btn-secondary" 
+                            data-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" 
+                            class="btn btn-info">
+                        Cargar
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+@if(session('success'))
+<script>
+Swal.fire({
+    icon: 'success',
+    title: 'Correcto',
+    text: "{{ session('success') }}"
+});
+</script>
+@endif
+
+@if(session('error'))
+<script>
+Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: "{{ session('error') }}"
+});
+</script>
+@endif
 @endsection
 
 @section('scripts')
