@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->id();
-            $table->string('folio')->unique();
+            $table->string('folio');
             $table->string('proveedor');
             $table->date('fecha');
             $table->decimal('subtotal', 12, 2)->default(0);

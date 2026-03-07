@@ -186,7 +186,7 @@ class FacturaController extends Controller
                 // Datos principales
                 $comprobante = $xml;
 
-                $folio = (string) $comprobante['Folio'];
+                $folio = (string) $comprobante['Serie'] . $comprobante['Folio'];
                 $fecha = (string) $comprobante['Fecha'];
                 $subtotal = (float) $comprobante['SubTotal'];
                 $total = (float) $comprobante['Total'];

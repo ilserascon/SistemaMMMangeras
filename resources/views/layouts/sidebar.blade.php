@@ -25,6 +25,9 @@
         <li class="{{ request()->is('inventarios*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('inventarios.index') }}"><i class="fas fa-clipboard-list"></i> <span>Inventario</span></a>
         </li>
+        <li class="{{ request()->is('traslados*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('traslados.index') }}"><i class="fas fa-exchange-alt"></i> <span>Traslados</span></a>
+        </li>
       @endif
     </ul>
   </aside>

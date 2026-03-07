@@ -32,7 +32,7 @@ return new class extends Migration {
         // Crear usuario admin
         DB::table('users')->insert([
             'name' => 'admin',
-            'email' => 'admin@einsoft.com',
+            'email' => 'admin@mmmangueras.com',
             'password' => bcrypt('admin'),
             'role_id' => $adminRoleId,
             'created_at' => now(),

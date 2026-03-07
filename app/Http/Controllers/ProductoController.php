@@ -79,4 +79,26 @@ class ProductoController extends Controller
     {
         //
     }
+
+    public function buscar(Request $request)
+    {
+        $producto = Producto::where('codigo', $request->codigo)
+            ->with(['inventarios' => function ($q) use ($request) {
+                $q->where('bodega_id', $request->bodega_id);
+            }])
+            ->first();
+
+        if (!$producto) {
+            return response()->json(['error' => 'Producto no encontrado'], 404);
+        }
+
+        $inventario = $producto->inventarios->first();
+        $stock = $inventario ? $inventario->cantidad : 0;
+
+        return response()->json([
+            'id' => $producto->id,
+            'descripcion' => $producto->descripcion,
+            'stock' => $stock
+        ]);
+    }
 }
